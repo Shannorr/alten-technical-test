@@ -1,1 +1,55 @@
-<p>products-admin works!</p>
+<!-- https://www.primefaces.org/primeng-v14-lts/table/crud -->
+<p-toast></p-toast>
+
+<div class="card">
+  <p-toolbar styleClass="mb-4 gap-2">
+      <div class="p-toolbar-group-left">
+          <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+          <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+      </div>
+
+      <div class="p-toolbar-group-right">  
+        <p-button icon="pi pi-cog"></p-button>
+      </div>
+  </p-toolbar>
+
+  <p-table #dt [value]="products" styleClass="p-datatable-striped p-datatable-gridlines" [rows]="10" [paginator]="true" 
+  [(selection)]="selectedProducts" dataKey="id" >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="code">
+          code <p-sortIcon field="code"> </p-sortIcon>
+        </th>
+        <th pSortableColumn="name">
+          name <p-sortIcon field="name"> </p-sortIcon>
+        </th>
+        <th>Actions</th>
+      </tr>
+      <!-- <tr>
+        <th>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'code', 'contains')" [value]="dt.filters['code']?.value" placeholder="Search by Code" class="w-full">
+        </th>
+        <th>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'name', 'contains')" [value]="dt.filters['name']?.value" placeholder="Search by Name" class="w-full">
+        </th>
+      </tr> -->
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="product"></p-tableCheckbox>
+      </td>
+        <td>{{ product.code }}</td>
+        <td>{{ product.name }}</td>
+        <td>
+          <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text" (click)="editProduct(product)"></button>
+          <button pButton type="button" icon="pi pi-trash" class= "p-button-rounded p-button-danger p-button-text" (click)="deleteProduct(product)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  
+</div>
